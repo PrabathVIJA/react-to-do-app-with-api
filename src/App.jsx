@@ -6,6 +6,21 @@ import { useEffect, useState } from "react";
 function App() {
   const [noteId, setNoteId] = useState("");
   const [noteArray, setNotesArray] = useState([]);
+  // for getting data from localStorage
+  useEffect(() => {
+    const savedNotes = JSON.parse(localStorage.getItem("react-notes-app-data"));
+
+    if (savedNotes) {
+      setNotesArray(savedNotes);
+    }
+  }, []);
+
+  // writing into local storage
+  useEffect(() => {
+    localStorage.setItem("react-notes-app-data", JSON.stringify(noteArray));
+  }, [noteArray]);
+
+  // for fetching data from api
   useEffect(() => {
     if (!noteId) {
       return;
