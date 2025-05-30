@@ -23,6 +23,8 @@ function App() {
   // for fetching data from api
   useEffect(() => {
     if (!noteId) {
+      console.log("empty string");
+
       return;
     }
     if (noteId == 0) {
@@ -43,7 +45,9 @@ function App() {
   }, [noteId]);
   //managing data entered from text area
   function AddNoteHandler(e) {
-    setNoteId(e);
+    const numericValue = e.replace(/[^0-9]/g, "");
+
+    setNoteId(numericValue);
   }
   //For deleting notes
   function deleteNote(id) {

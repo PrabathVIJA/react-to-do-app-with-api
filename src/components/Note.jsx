@@ -6,7 +6,7 @@ export default function Note({ note, deleteNote }) {
       <div className="note-container">
         <p>{note.title}</p>
         <div className="note-footer">
-          <p>{note.id}</p>
+          <p>{note.title.length} no of characters</p>
           <MdDeleteForever
             onClick={() => deleteNote(note.id)}
             className="delete-icon"
