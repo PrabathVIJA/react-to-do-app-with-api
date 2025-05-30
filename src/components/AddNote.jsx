@@ -3,7 +3,6 @@ export default function AddNote({ addNote, value }) {
     <>
       <div className="note-new">
         <textarea
-          type="number"
           rows="5"
           cols="30"
           placeholder="Please enter random id.."
