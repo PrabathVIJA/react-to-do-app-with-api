@@ -1,6 +1,37 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: #bde0fe;
+  flex-wrap: wrap;
+}
+.note-container {
+  background-color: #f0fff0;
+  padding: 6px;
+  border-radius: 8px;
+  width: 250px;
+  height: 188px; /* or whatever fixed height you want */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; /* Pushes footer to bottom */
+  margin-top: 5px;
+  margin-right: 10px;
+}
+.note-new {
+  height: 198px;
+  width: 250px;
+  padding: 2px;
+  margin-top: 6px;
+  background-color: #ffb703;
+}
+
+.note-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+button {
+  margin-top: 10px;
+  size: 8px;
+  height: 25px;
 }
