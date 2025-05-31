@@ -48,6 +48,7 @@ function App() {
           quote = await res.json();
         } catch {
           toast.error("can't parse data");
+          return;
         }
         if (!quote || !quote.title) {
           throw new Error("Unexpected response format");
