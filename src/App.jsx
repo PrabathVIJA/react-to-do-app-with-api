@@ -27,7 +27,7 @@ function App() {
 
       return;
     }
-    if (noteId == 0) {
+    if (parseInt(noteId) === 0) {
       setNoteId("");
       alert("Do not enter zero");
       return;
