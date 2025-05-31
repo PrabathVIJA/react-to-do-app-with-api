@@ -2,6 +2,8 @@ import "./App.css";
 import NotesList from "./components/NotesList";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [noteId, setNoteId] = useState("");
@@ -29,7 +31,7 @@ function App() {
     }
     if (parseInt(noteId) === 0) {
       setNoteId("");
-      alert("Do not enter zero");
+      toast.error("Do not enter zero");
       return;
     }
 
@@ -64,6 +66,7 @@ function App() {
           deleteNote={deleteNote}
         />
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }
