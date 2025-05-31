@@ -13,6 +13,7 @@ function App() {
     const savedNotes = JSON.parse(localStorage.getItem("react-notes-app-data"));
 
     if (savedNotes) {
+      toast.info("Fetching data from local storage...");
       setNotesArray(savedNotes);
     }
   }, []);
@@ -25,8 +26,6 @@ function App() {
   // for fetching data from api
   useEffect(() => {
     if (!noteId) {
-      console.log("empty string");
-
       return;
     }
     if (parseInt(noteId) === 0) {
@@ -36,18 +35,45 @@ function App() {
     }
 
     async function fetchQuote() {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/todos/${noteId}`
-      );
-      const quote = await res.json();
-      setNotesArray((prevNotes) => [...prevNotes, { ...quote, id: nanoid() }]);
-      setNoteId("");
+      try {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/todos/${noteId}`
+        );
+        toast.info("fetching data from api");
+        if (!res.ok) {
+          throw new Error("Requested item not found");
+        }
+        let quote;
+        try {
+          quote = await res.json();
+        } catch {
+          toast.error("can't parse data");
+        }
+        if (!quote || !quote.title) {
+          throw new Error("Unexpected response format");
+        }
+
+        setNotesArray((prevNotes) => [
+          ...prevNotes,
+          { ...quote, id: nanoid() },
+        ]);
+
+        toast.success("Note added!");
+      } catch (e) {
+        toast.error(e.message);
+      } finally {
+        setNoteId("");
+      }
     }
     fetchQuote();
   }, [noteId]);
+
   //managing data entered from text area
   function AddNoteHandler(e) {
     const numericValue = e.replace(/[^0-9]/g, "");
+    if (!numericValue) {
+      toast.error("Don't enter alphabets");
+    }
 
     setNoteId(numericValue);
   }
@@ -55,6 +81,7 @@ function App() {
   function deleteNote(id) {
     const updatedNote = noteArray.filter((note) => note.id != id);
     setNotesArray(updatedNote);
+    toast.success("Note deleted!");
   }
   return (
     <>
@@ -66,7 +93,7 @@ function App() {
           deleteNote={deleteNote}
         />
       </div>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={1000} />
     </>
   );
 }
